@@ -1,0 +1,89 @@
+<template>
+	<view class="test">
+		
+		<image src="../../static/love.png" mode="" class="logo" @click="clickme"  ></image>
+		<view class="heartsContainer">
+			<image src="../../static/love.png" v-for="item in heartList" mode="" class="in"   ref="testA" :key="item"></image>
+		</view>
+	</view>
+</template>
+<script>
+	const animation = weex.requireModule('animation')
+	const modal = weex.requireModule('modal')
+	export default {
+		data() {
+			return {
+				isShow:true,
+				nextHeartIndex:0,
+				heartList:[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+			}
+		}, 
+		methods: {
+			// 获取下一个心
+			getNextHeart(){
+				let index = this.nextHeartIndex
+				let maxIndex = this.$refs.testA.length - 1
+				if(index + 1 <= maxIndex){
+					this.nextHeartIndex = index + 1
+				}else{
+					this.nextHeartIndex = 0
+				}
+				
+				return this.$refs.testA[index]
+			},
+			clickme() {
+				let testE = this.getNextHeart()
+				animation.transition(testE, {
+					styles: {
+						transform: 'scale(5)',
+						opacity: .6,
+						width: 50+'px',
+						height: 50+'px',
+					},
+					needLayout:false,
+					duration: 800,
+				}, (()=> {
+					animation.transition(testE, {
+						styles: {
+							opacity: 0,
+							width: '0px',
+							height: '0px'
+						},
+					})
+				}))
+				
+					
+				
+			}
+		}
+	}
+</script>
+<style>
+	page, .test {
+		width: 375px;
+		height: 760px;
+	}
+	.logo {
+		width: 50px;
+		height: 50px;
+		margin-left: 300upx;
+		margin-top: 500upx;
+		opacity: 1;
+	}
+	
+	.heartsContainer{
+		position: relative;
+	}
+	.in {
+		width: 0px;
+		height: 0px;
+		margin-left: 300upx;
+		margin-top: 500upx;
+		opacity: 1;
+		position: fixed;
+		left: 0;
+		top: 0;
+	}
+
+	
+</style>
