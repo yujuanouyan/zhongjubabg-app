@@ -1,0 +1,9 @@
+1、查看git用户所有信息 
+	git config --list 
+2、如果你没有初始化过。那么直接：
+	$  git config --global user.name "输入你的用户名"
+	$  git config --global user.email "输入你的邮箱"
+
+否则 
+	$  git config --global --replace-all user.email "输入你的邮箱" 
+	$  git config --global --replace-all user.name "输入你的用户名"
